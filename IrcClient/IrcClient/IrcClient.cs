@@ -5,6 +5,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
@@ -112,18 +113,46 @@ namespace GangwarsBot
 			string ReadedLine;
 			while (true) {
 				while ((ReadedLine = Reader.ReadLine ()) != null) {
+					string CommandChannel = DefaultChannel;
 					Console.WriteLine ("IN: " + ReadedLine);
-					string[] LineSplit = ReadedLine.Split (new Char[] { ' ' });
+
+					string[] LineSplit = ReadedLine.Split (new Char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+					string[] MessageSplit = ReadedLine.Split (new Char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+
 
 					if (LineSplit [0] == "PING") {
 						SendResponse ("PONG " + LineSplit [1], true);
+						continue;
+					}
+
+					Match m = Regex.Match (LineSplit [0], @"\:.*\@(.*)");
+					string Host = m.Groups [1].Value;
+
+					if (CheckHost (Host) && LineSplit [1] == "PRIVMSG") {
+						string Command = LineSplit [3].Trim (new Char[] { ':' });
+						switch (Command) {
+						case "!join":
+							if (LineSplit.Length > 4) {
+								if (LineSplit.Length > 5) {
+									JoinChannel (LineSplit [4], LineSplit [5]);
+								}
+								JoinChannel (LineSplit [4]);
+							} else {
+								SendResponse ("Nicht genug Argumente. !join <Channel> <?Key>", false, CommandChannel);
+							}
+							break;
+						}
 					}
 
 					switch (LineSplit [1]) {
-					case "221":
+					case "376":
 						JoinChannel ();
 						break;
+					case "475":
+						SendResponse (MessageSplit [1], false, CommandChannel);
+						break;
 					}
+						
 				}
 			}
 		}
