@@ -40,7 +40,7 @@ namespace GangwarsBot
 
 				//Anlegen der default-Werte
 				DataRow row = HostTable.NewRow ();
-				row ["Host"] = "Dawn.quakenet.org";
+				row ["Host"] = "Dawn.users.quakenet.org";
 
 				HostTable.Rows.Add (row);
 
@@ -85,7 +85,14 @@ namespace GangwarsBot
 
 		private bool CheckHost (string Host)
 		{
-			return true;
+			DataTable HostTable = getHostEntrys ("Hosts.xml");
+
+			foreach (DataRow row in HostTable.Rows) {
+				if (row ["Host"].ToString () == Host) {
+					return true;
+				}
+			}
+			return false;
 		}
 
 		private void JoinChannel (string Channel = null, string Key = null)
@@ -103,10 +110,31 @@ namespace GangwarsBot
 			SendResponse (OutLine, true);
 		}
 
-		private void ParseChannelCommand (string ChannelCommand, string Channel)
+		private void ParseChannelCommand (string ChannelMessage, string Channel)
 		{
-			
+			string[] CommandSplit = ChannelMessage.Split (new Char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+			string arg1 = null;
+			string arg2 = null;
+			if (CommandSplit.Length > 1) {
+				arg1 = CommandSplit [1];
+				if (CommandSplit.Length > 2) {
+					arg2 = CommandSplit [2];
+				}
+			}
 
+			switch (CommandSplit [0]) {
+			case "!join":
+				if (arg1 != null) {
+					if (arg2 != null) {
+						JoinChannel (arg1, arg2);
+					} else {
+						JoinChannel (arg1);
+					}
+				} else {
+					SendResponse ("Nicht genug Argumente. !join <Channel> <?Key>", false, Channel);
+				}
+				break;
+			}
 		}
 
 		private void ReadResponse ()
@@ -125,25 +153,14 @@ namespace GangwarsBot
 						SendResponse ("PONG " + LineSplit [1], true);
 						continue;
 					}
+					if (LineSplit [1] == "PRIVMSG") {
+						Match m = Regex.Match (LineSplit [0], @"\:.*\@(.*)");
+						string Host = m.Groups [1].Value;
 
-					Match m = Regex.Match (LineSplit [0], @"\:.*\@(.*)");
-					string Host = m.Groups [1].Value;
-
-					if (CheckHost (Host) && LineSplit [1] == "PRIVMSG") {
-						string Command = LineSplit [3].Trim (new Char[] { ':' });
-						CommandChannel = LineSplit [2];
-						switch (Command) {
-						case "!join":
-							if (LineSplit.Length > 4) {
-								if (LineSplit.Length > 5) {
-									JoinChannel (LineSplit [4], LineSplit [5]);
-								} else {
-									JoinChannel (LineSplit [4]);
-								}
-							} else {
-								SendResponse ("Nicht genug Argumente. !join <Channel> <?Key>", false, CommandChannel);
-							}
-							break;
+						if (CheckHost (Host)) {
+							string ChannelMessage = MessageSplit [1].Trim (new Char[] { ':' });
+							CommandChannel = LineSplit [2];
+							ParseChannelCommand (ChannelMessage, CommandChannel);
 						}
 					}
 
