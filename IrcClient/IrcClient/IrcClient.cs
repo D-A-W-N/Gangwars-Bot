@@ -106,6 +106,7 @@ namespace GangwarsBot
 		private void ParseChannelCommand (string ChannelCommand, string Channel)
 		{
 			
+
 		}
 
 		private void ReadResponse ()
@@ -130,13 +131,15 @@ namespace GangwarsBot
 
 					if (CheckHost (Host) && LineSplit [1] == "PRIVMSG") {
 						string Command = LineSplit [3].Trim (new Char[] { ':' });
+						CommandChannel = LineSplit [2];
 						switch (Command) {
 						case "!join":
 							if (LineSplit.Length > 4) {
 								if (LineSplit.Length > 5) {
 									JoinChannel (LineSplit [4], LineSplit [5]);
+								} else {
+									JoinChannel (LineSplit [4]);
 								}
-								JoinChannel (LineSplit [4]);
 							} else {
 								SendResponse ("Nicht genug Argumente. !join <Channel> <?Key>", false, CommandChannel);
 							}
