@@ -202,7 +202,9 @@ namespace GangwarsBot
 				}
 				OutLine = "PRIVMSG " + Channel + " :" + Output;
 			}
+			Console.ForegroundColor = ConsoleColor.Red;
 			Console.WriteLine ("OUT: " + OutLine);
+			Console.ForegroundColor = ConsoleColor.White;
 			Writer.WriteLine (OutLine);
 			Writer.Flush ();
 		}
