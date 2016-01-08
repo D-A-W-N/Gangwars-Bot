@@ -110,6 +110,13 @@ namespace GangwarsBot
 			SendResponse (OutLine, true);
 		}
 
+		private void PartChannel (string Channel)
+		{
+			string OutLine;
+			OutLine = "PART " + Channel;
+			SendResponse (OutLine, true);
+		}
+
 		private void ParseChannelCommand (string ChannelMessage, string Channel)
 		{
 			string[] CommandSplit = ChannelMessage.Split (new Char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
@@ -132,6 +139,13 @@ namespace GangwarsBot
 					}
 				} else {
 					SendResponse ("Nicht genug Argumente. !join <Channel> <?Key>", false, Channel);
+				}
+				break;
+			case "!part":
+				if (arg1 != null) {
+					PartChannel (arg1);
+				} else {
+					SendResponse ("Nicht genug Argumente. !part <Channel>", false, Channel);
 				}
 				break;
 			}
