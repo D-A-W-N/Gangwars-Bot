@@ -192,16 +192,6 @@ namespace GangwarsBot
 						SendResponse ("PONG " + LineSplit [1], true);
 						continue;
 					}
-					if (LineSplit [1] == "PRIVMSG") {
-						Match m = Regex.Match (LineSplit [0], @"\:.*\@(.*)");
-						string Host = m.Groups [1].Value;
-
-						if (CheckHost (Host)) {
-							string ChannelMessage = MessageSplit [1].Trim (new Char[] { ':' });
-							CommandChannel = LineSplit [2];
-							ParseChannelCommand (ChannelMessage, CommandChannel);
-						}
-					}
 
 					switch (LineSplit [1]) {
 					case "376":
@@ -210,8 +200,17 @@ namespace GangwarsBot
 					case "475":
 						SendResponse (MessageSplit [1], false, CommandChannel);
 						break;
+					case "PRIVMSG":
+						Match m = Regex.Match (LineSplit [0], @"\:.*\@(.*)");
+						string Host = m.Groups [1].Value;
+
+						if (CheckHost (Host)) {
+							string ChannelMessage = MessageSplit [1].Trim (new Char[] { ':' });
+							CommandChannel = LineSplit [2];
+							ParseChannelCommand (ChannelMessage, CommandChannel);
+						}
+						break;
 					}
-						
 				}
 			}
 		}
