@@ -75,6 +75,67 @@ namespace GangwarsBot
 			return HostTable;
 		}
 
+		private DataTable getChannels (string Path)
+		{
+			DataTable ChannelTable = new DataTable ("ChannelEntrys");
+
+			if (File.Exists (Path)) {
+				ChannelTable.ReadXml (Path);
+			} else {
+				// Datei existiert noch nicht - Erstellen der Spalten
+				ChannelTable.Columns.Add ("Channel", typeof(string));
+				ChannelTable.Columns.Add ("Key", typeof(string));
+
+				//Anlegen der default-Werte
+				DataRow row = ChannelTable.NewRow ();
+				row ["Channel"] = DefaultChannel;
+				row ["Key"] = "";
+
+				ChannelTable.Rows.Add (row);
+
+				ChannelTable.WriteXml (Path, XmlWriteMode.WriteSchema);
+			}
+
+			return ChannelTable;
+		}
+
+		private DataTable getEntrys (string Path)
+		{
+			DataTable Table = new DataTable ();
+			Table.ReadXml (Path);
+			return Table;
+		}
+
+
+
+		private void setEntrys (string Path, string Column1, string Value1, string Column2 = null, string Value2 = null)
+		{
+			DataTable Table = getEntrys (Path);
+			DataRow row = Table.NewRow ();
+			row [Column1] = Value1;
+			if (Column2 != null && Value2 != null) {
+				row [Column2] = Value2;
+			}
+			Table.Rows.Add (row);
+			Table.WriteXml (Path, XmlWriteMode.WriteSchema);
+		}
+
+		private void deleteEntrys (string Path, string Column, string Value)
+		{
+			DataTable Table = getEntrys (Path);
+			int i = 0;
+			Table.AcceptChanges ();
+			foreach (DataRow row in Table.Rows) {
+				
+				if (row [Column].ToString () == Value) {
+					Table.Rows [i].Delete ();
+				}
+				i++;
+			}
+			Table.AcceptChanges ();
+			Table.WriteXml (Path, XmlWriteMode.WriteSchema);
+		}
+
 
 		public IrcClient ()
 		{
@@ -120,19 +181,46 @@ namespace GangwarsBot
 			return false;
 		}
 
+		private bool CheckChannel (string Path, string Channel)
+		{
+			DataTable ChannelTable = getChannels ("Channels.xml");
+
+			foreach (DataRow row in ChannelTable.Rows) {
+				if (row ["Channel"].ToString () == Channel) {
+					return true;
+				}
+			}
+			return false;
+		}
+
 		private void JoinChannel (string Channel = null, string Key = null)
 		{
 			string OutLine;
 			if (Channel == null) {
-				OutLine = "JOIN " + DefaultChannel;
+				DataTable ChannelTable = getChannels ("Channels.xml");
+
+				foreach (DataRow row in ChannelTable.Rows) {
+					if (!String.IsNullOrEmpty (row ["Key"].ToString ())) {
+						OutLine = "JOIN " + row ["Channel"].ToString () + " " + row ["Key"].ToString ();
+					} else {
+						OutLine = "JOIN " + row ["Channel"].ToString ();
+					}
+
+					SendResponse (OutLine, true);
+				}
+
 			} else {
 				if (Key == null) {
 					OutLine = "JOIN " + Channel;
+					setEntrys ("Channels.xml", "Channel", Channel);
 				} else {
 					OutLine = "JOIN " + Channel + " " + Key;
+					setEntrys ("Channels.xml", "Channel", Channel, "Key", Key);
 				}
+				SendResponse (OutLine, true);
+
 			}
-			SendResponse (OutLine, true);
+
 		}
 
 		private void PartChannel (string Channel)
@@ -197,8 +285,15 @@ namespace GangwarsBot
 					case "376":
 						JoinChannel ();
 						break;
+					case "366":
+						SendResponse (LineSplit [3] + " betretten.", false, CommandChannel);
+						break;
 					case "475":
 						SendResponse (MessageSplit [1], false, CommandChannel);
+						break;
+					case "PART":
+						deleteEntrys ("Channels.xml", "Channel", LineSplit [2]);
+						SendResponse (LineSplit [2] + " verlassen.", false, CommandChannel);
 						break;
 					case "PRIVMSG":
 						Match m = Regex.Match (LineSplit [0], @"\:.*\@(.*)");
