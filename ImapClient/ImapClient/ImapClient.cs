@@ -44,7 +44,7 @@ namespace GangwarsBot
 			// Dispose of existing instance, if any.
 			if (Client != null)
 				Client.Dispose ();
-			Client = new ImapClient (Server, Port, User, Pass, AuthMethod.Login);
+			Client = new ImapClient (Server, Port, User, Pass, AuthMethod.Auto);
 			if (Client.Authed) {
 				Console.ForegroundColor = ConsoleColor.Red;
 				Console.WriteLine ("IMAP:: Connected to {0} via Port {1}", Server, Port);
@@ -70,7 +70,6 @@ namespace GangwarsBot
 				IrcClient.FilterEmail (Message, Irc);
 			}
 		}
-			
+
 	}
 }
-

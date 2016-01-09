@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+    <metadata>
+        <id>ImapX</id>
+        <version>2.0.0.18</version>
+        <title>ImapX</title>
+        <authors>Pavel Azanov</authors>
+        <owners>Pavel Azanov</owners>
+        <licenseUrl>http://imapx.codeplex.com/license/</licenseUrl>
+        <projectUrl>http://imapx.codeplex.com/</projectUrl>
+        <iconUrl>http://www.imapx.org/imapx-nuget.png</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>ImapX 2 is a crossplatform IMAP library for .NET, supporting SSL/TLS, OAuth2 and all major GMail IMAP extensions.</description>
+        <summary>ImapX 2 is a crossplatform IMAP library for .NET, supporting SSL/TLS, OAuth2 and all major GMail IMAP extensions.</summary>
+        <tags>imap, email, mail, mailing, imapx</tags>
+        <dependencies>
+            <group targetFramework=".NETFramework2.0">
+                <dependency id="LinqBridge" version="1.3.0" />
+            </group>
+            <group targetFramework=".NETFramework3.0">
+                <dependency id="LinqBridge" version="1.3.0" />
+            </group>
+            <group targetFramework=".NETFramework3.5" />
+            <group targetFramework=".NETFramework4.0" />
+            <group targetFramework=".NETFramework4.5" />
+            <group targetFramework=".NETFramework4.0-Client" />
+            <group targetFramework=".NETFramework3.5-Client" />
+            <group targetFramework=".NETFramework4.5.1" />
+            <group targetFramework=".NETFramework4.6" />
+            <group targetFramework=".NETFramework4.5.2" />
+        </dependencies>
+    </metadata>
+</package>
