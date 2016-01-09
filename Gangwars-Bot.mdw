@@ -1,6 +1,5 @@
 <WorkspaceItem ctype="Workspace">
   <Items>
-    <Item>IrcClient/IrcClient.sln</Item>
-    <Item>ImapClient/ImapClient.sln</Item>
+    <Item>IrcClient/Connections.sln</Item>
   </Items>
 </WorkspaceItem>

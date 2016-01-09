@@ -41,4 +41,10 @@
     <Compile Include="ImapClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\IrcClient\IrcClient\IrcClient.csproj">
+      <Project>{C558D79A-20A9-4D11-9EF1-4ED02C001AB0}</Project>
+      <Name>IrcClient</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

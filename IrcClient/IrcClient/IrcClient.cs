@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Common;
 using System.IO;
 using System.Net;
+using System.Net.Mail;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -262,6 +263,11 @@ namespace GangwarsBot
 				}
 				break;
 			}
+		}
+
+		public static void FilterEmail (MailMessage Message)
+		{
+			
 		}
 
 		private void ReadResponse ()

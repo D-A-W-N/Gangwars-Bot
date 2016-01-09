@@ -1,0 +1,14 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ImapClient/ImapClient/ImapClient.cs">
+    <Files>
+      <File FileName="ImapClient/ImapClient/Program.cs" Line="4" Column="1" />
+      <File FileName="ImapClient/ImapClient/ImapClient.cs" Line="65" Column="4" />
+      <File FileName="IrcClient/IrcClient/IrcClient.cs" Line="7" Column="22" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

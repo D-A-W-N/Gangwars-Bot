@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Net.Mail;
 using System.Threading;
 using S22.Imap;
+using GangwarsBot;
 
 namespace GangwarsBot
 {
@@ -59,7 +61,9 @@ namespace GangwarsBot
 		static void client_NewMessage (object sender, IdleMessageEventArgs e)
 		{
 			Console.WriteLine ("Got a new message, uid = " + e.MessageUID);
+			MailMessage Message = Client.GetMessage (e.MessageUID);
 		}
+			
 	}
 }
 

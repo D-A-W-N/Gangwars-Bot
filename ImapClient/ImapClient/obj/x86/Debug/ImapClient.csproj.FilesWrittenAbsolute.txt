@@ -4,3 +4,5 @@
 /home/nils/Gangwars-Bot/ImapClient/ImapClient/obj/x86/Debug/ImapClient.exe
 /home/nils/Gangwars-Bot/ImapClient/ImapClient/obj/x86/Debug/ImapClient.exe.mdb
 /home/nils/Gangwars-Bot/ImapClient/ImapClient/bin/Debug/S22.Imap.dll
+/home/nils/Gangwars-Bot/ImapClient/ImapClient/bin/Debug/IrcClient.exe
+/home/nils/Gangwars-Bot/ImapClient/ImapClient/bin/Debug/IrcClient.exe.mdb
