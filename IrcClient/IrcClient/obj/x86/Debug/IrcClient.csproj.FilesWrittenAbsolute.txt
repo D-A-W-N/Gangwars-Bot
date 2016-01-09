@@ -1,5 +1,5 @@
 /home/nils/Gangwars-Bot/IrcClient/IrcClient/obj/x86/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
-/home/nils/Gangwars-Bot/IrcClient/IrcClient/bin/Debug/IrcClient.exe.mdb
-/home/nils/Gangwars-Bot/IrcClient/IrcClient/bin/Debug/IrcClient.exe
-/home/nils/Gangwars-Bot/IrcClient/IrcClient/obj/x86/Debug/IrcClient.exe
-/home/nils/Gangwars-Bot/IrcClient/IrcClient/obj/x86/Debug/IrcClient.exe.mdb
+/home/nils/Gangwars-Bot/IrcClient/IrcClient/bin/Debug/IrcClient.dll.mdb
+/home/nils/Gangwars-Bot/IrcClient/IrcClient/bin/Debug/IrcClient.dll
+/home/nils/Gangwars-Bot/IrcClient/IrcClient/obj/x86/Debug/IrcClient.dll
+/home/nils/Gangwars-Bot/IrcClient/IrcClient/obj/x86/Debug/IrcClient.dll.mdb

@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IrcClient", "IrcClient\IrcC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImapClient", "..\ImapClient\ImapClient\ImapClient.csproj", "{23F465C6-728D-425D-A735-F740D1E71623}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleBot", "..\ConsoleBot\ConsoleBot.csproj", "{259F2841-91FD-48F5-B1BA-735ED2027285}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -15,6 +17,10 @@ Global
 		{23F465C6-728D-425D-A735-F740D1E71623}.Debug|x86.Build.0 = Debug|x86
 		{23F465C6-728D-425D-A735-F740D1E71623}.Release|x86.ActiveCfg = Release|x86
 		{23F465C6-728D-425D-A735-F740D1E71623}.Release|x86.Build.0 = Release|x86
+		{259F2841-91FD-48F5-B1BA-735ED2027285}.Debug|x86.ActiveCfg = Debug|x86
+		{259F2841-91FD-48F5-B1BA-735ED2027285}.Debug|x86.Build.0 = Debug|x86
+		{259F2841-91FD-48F5-B1BA-735ED2027285}.Release|x86.ActiveCfg = Release|x86
+		{259F2841-91FD-48F5-B1BA-735ED2027285}.Release|x86.Build.0 = Release|x86
 		{C558D79A-20A9-4D11-9EF1-4ED02C001AB0}.Debug|x86.ActiveCfg = Debug|x86
 		{C558D79A-20A9-4D11-9EF1-4ED02C001AB0}.Debug|x86.Build.0 = Debug|x86
 		{C558D79A-20A9-4D11-9EF1-4ED02C001AB0}.Release|x86.ActiveCfg = Release|x86

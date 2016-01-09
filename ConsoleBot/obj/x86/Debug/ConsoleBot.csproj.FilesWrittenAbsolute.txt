@@ -1,0 +1,10 @@
+/home/nils/Gangwars-Bot/ConsoleBot/obj/x86/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/home/nils/Gangwars-Bot/ConsoleBot/bin/Debug/ConsoleBot.exe.mdb
+/home/nils/Gangwars-Bot/ConsoleBot/bin/Debug/ConsoleBot.exe
+/home/nils/Gangwars-Bot/ConsoleBot/obj/x86/Debug/ConsoleBot.exe
+/home/nils/Gangwars-Bot/ConsoleBot/obj/x86/Debug/ConsoleBot.exe.mdb
+/home/nils/Gangwars-Bot/ConsoleBot/bin/Debug/ImapClient.dll
+/home/nils/Gangwars-Bot/ConsoleBot/bin/Debug/ImapClient.dll.mdb
+/home/nils/Gangwars-Bot/ConsoleBot/bin/Debug/IrcClient.dll
+/home/nils/Gangwars-Bot/ConsoleBot/bin/Debug/IrcClient.dll.mdb
+/home/nils/Gangwars-Bot/ConsoleBot/bin/Debug/S22.Imap.dll

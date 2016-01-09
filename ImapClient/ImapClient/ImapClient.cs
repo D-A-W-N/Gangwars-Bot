@@ -18,18 +18,18 @@ namespace GangwarsBot
 
 		static AutoResetEvent reconnectEvent = new AutoResetEvent (false);
 		static ImapClient Client;
+		static IrcClient Irc;
 
-		public ImapListener ()
+		public ImapListener (IrcClient irc)
 		{
+			Irc = irc;
 		}
 
 		public void Connect ()
 		{
 			try {
 				while (true) {
-					Console.Write ("Connecting...");
 					InitializeClient ();
-					Console.WriteLine ("OK");
 
 					reconnectEvent.WaitOne ();
 				}
@@ -45,9 +45,14 @@ namespace GangwarsBot
 			if (Client != null)
 				Client.Dispose ();
 			Client = new ImapClient (Server, Port, User, Pass, AuthMethod.Login);
-			// Setup event handlers.
-			Client.NewMessage += client_NewMessage;
-			Client.IdleError += client_IdleError;
+			if (Client.Authed) {
+				Console.ForegroundColor = ConsoleColor.Red;
+				Console.WriteLine ("IMAP:: Connected to {0} via Port {1}", Server, Port);
+				Console.ForegroundColor = ConsoleColor.White;
+				// Setup event handlers.
+				Client.NewMessage += client_NewMessage;
+				Client.IdleError += client_IdleError;
+			}
 		}
 
 		static void client_IdleError (object sender, IdleErrorEventArgs e)
@@ -60,8 +65,10 @@ namespace GangwarsBot
 
 		static void client_NewMessage (object sender, IdleMessageEventArgs e)
 		{
-			Console.WriteLine ("Got a new message, uid = " + e.MessageUID);
 			MailMessage Message = Client.GetMessage (e.MessageUID);
+			if (Message.Body.Contains ("Angriffswarnung")) {
+				IrcClient.FilterEmail (Message, Irc);
+			}
 		}
 			
 	}

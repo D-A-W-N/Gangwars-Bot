@@ -265,9 +265,9 @@ namespace GangwarsBot
 			}
 		}
 
-		public static void FilterEmail (MailMessage Message)
+		public static void FilterEmail (MailMessage Message, IrcClient irc)
 		{
-			
+			irc.SendResponse ("New Mail", false, "#test.news");
 		}
 
 		private void ReadResponse ()

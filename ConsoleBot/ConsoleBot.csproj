@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{23F465C6-728D-425D-A735-F740D1E71623}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>ImapClient</RootNamespace>
-    <AssemblyName>ImapClient</AssemblyName>
+    <ProjectGuid>{259F2841-91FD-48F5-B1BA-735ED2027285}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ConsoleBot</RootNamespace>
+    <AssemblyName>ConsoleBot</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -31,17 +31,18 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="S22.Imap">
-      <HintPath>..\..\..\PremBot\S22.Imap.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ImapClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\..\IrcClient\IrcClient\IrcClient.csproj">
+    <ProjectReference Include="..\ImapClient\ImapClient\ImapClient.csproj">
+      <Project>{23F465C6-728D-425D-A735-F740D1E71623}</Project>
+      <Name>ImapClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IrcClient\IrcClient\IrcClient.csproj">
       <Project>{C558D79A-20A9-4D11-9EF1-4ED02C001AB0}</Project>
       <Name>IrcClient</Name>
     </ProjectReference>
