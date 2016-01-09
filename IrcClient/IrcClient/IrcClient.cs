@@ -265,9 +265,9 @@ namespace GangwarsBot
 			}
 		}
 
-		public static void FilterEmail (MailMessage Message, IrcClient irc)
+		public async void FilterEmail (MailMessage Message, IrcClient irc)
 		{
-			irc.SendResponse ("New Mail", false, "#test.news");
+			await Task.Run (() => irc.SendResponse ("New Mail", false, "#test.news"));
 		}
 
 		private void ReadResponse ()
@@ -316,7 +316,7 @@ namespace GangwarsBot
 			}
 		}
 
-		private void SendResponse (string Output, bool Cmd = false, string Channel = null)
+		private async void SendResponse (string Output, bool Cmd = false, string Channel = null)
 		{
 			string OutLine;
 			if (Cmd) {
@@ -332,6 +332,7 @@ namespace GangwarsBot
 			Console.ForegroundColor = ConsoleColor.White;
 			Writer.WriteLine (OutLine);
 			Writer.Flush ();
+			await Task.Delay (1000);
 		}
 	}
 }

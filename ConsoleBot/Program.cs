@@ -22,6 +22,7 @@ namespace GangwarsBot
 	
 				tr [0] = new Thread (new ThreadStart (irc.Connect));
 				tr [0].Name = String.Format ("IRC");
+				tr [0].IsBackground = false;
 
 				ImapListener imap = new ImapListener (irc);
 				imap.Server = "imap.1blu.de";
@@ -31,6 +32,7 @@ namespace GangwarsBot
 
 				tr [1] = new Thread (new ThreadStart (imap.Connect));
 				tr [1].Name = String.Format ("IMAP");
+				tr [1].IsBackground = true;
 
 				foreach (Thread x in tr) {
 					x.Start ();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Mail;
 using System.Threading;
+using System.Threading.Tasks;
 using S22.Imap;
 using GangwarsBot;
 
@@ -67,7 +68,7 @@ namespace GangwarsBot
 		{
 			MailMessage Message = Client.GetMessage (e.MessageUID);
 			if (Message.Body.Contains ("Angriffswarnung")) {
-				IrcClient.FilterEmail (Message, Irc);
+				Task.Run (() => Irc.FilterEmail (Message, Irc));
 			}
 		}
 
