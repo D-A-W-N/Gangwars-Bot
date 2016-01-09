@@ -1,0 +1,6 @@
+/home/nils/Gangwars-Bot/ImapClient/ImapClient/obj/x86/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/home/nils/Gangwars-Bot/ImapClient/ImapClient/bin/Debug/ImapClient.exe.mdb
+/home/nils/Gangwars-Bot/ImapClient/ImapClient/bin/Debug/ImapClient.exe
+/home/nils/Gangwars-Bot/ImapClient/ImapClient/obj/x86/Debug/ImapClient.exe
+/home/nils/Gangwars-Bot/ImapClient/ImapClient/obj/x86/Debug/ImapClient.exe.mdb
+/home/nils/Gangwars-Bot/ImapClient/ImapClient/bin/Debug/S22.Imap.dll
