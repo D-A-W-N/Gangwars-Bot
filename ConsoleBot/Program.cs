@@ -25,10 +25,10 @@ namespace GangwarsBot
 				tr [0].IsBackground = false;
 
 				ImapListener imap = new ImapListener (irc);
-				imap.Server = "imap.1blu.de";
+				imap.Server = "imap.example.de";
 				imap.Port = 143;
-				imap.User = "z233474_0-catchall";
-				imap.Pass = "catchall";
+				imap.User = "user";
+				imap.Pass = "pass";
 
 				tr [1] = new Thread (new ThreadStart (imap.Connect));
 				tr [1].Name = String.Format ("IMAP");
