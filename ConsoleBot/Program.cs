@@ -27,8 +27,8 @@ namespace GangwarsBot
 				ImapListener imap = new ImapListener (irc);
 				imap.Server = "localhost";
 				imap.Port = 143;
-				imap.User = "vmail";
-				imap.Pass = "vmailConnectionPasswort";
+				imap.User = "user";
+				imap.Pass = "passwort";
 
 				tr [1] = new Thread (new ThreadStart (imap.Connect));
 				tr [1].Name = String.Format ("IMAP");
