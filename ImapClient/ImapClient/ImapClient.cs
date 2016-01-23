@@ -45,13 +45,23 @@ namespace GangwarsBot
 			// Dispose of existing instance, if any.
 			if (Client != null)
 				Client.Dispose ();
+			
 			Client = new ImapClient (Server, Port, User, Pass, AuthMethod.Auto);
 			if (Client.Authed) {
 				Console.ForegroundColor = ConsoleColor.Red;
 				Console.WriteLine ("IMAP:: Connected to {0} via Port {1}", Server, Port);
 				Console.ForegroundColor = ConsoleColor.White;
+
+				if (Client.Supports ("IDLE") == false) {
+					Console.ForegroundColor = ConsoleColor.Red;
+					Console.WriteLine ("IMAP:: Server does not support IMAP IDLE");
+					Console.ForegroundColor = ConsoleColor.White;
+					return;
+				}
+
 				// Setup event handlers.
-				Client.NewMessage += client_NewMessage;
+				Client.NewMessage += new EventHandler<IdleMessageEventArgs> (OnNewMessage);
+
 				Client.IdleError += client_IdleError;
 			}
 		}
@@ -64,11 +74,11 @@ namespace GangwarsBot
 			reconnectEvent.Set ();
 		}
 
-		static void client_NewMessage (object sender, IdleMessageEventArgs e)
+		static async void OnNewMessage (object sender, IdleMessageEventArgs e)
 		{
 			MailMessage Message = Client.GetMessage (e.MessageUID);
 			if (Message.Body.Contains ("Angriffswarnung")) {
-				Task.Run (() => Irc.FilterEmail (Message, Irc));
+				await Task.Run (() => Irc.FilterEmail (Message));
 			}
 		}
 

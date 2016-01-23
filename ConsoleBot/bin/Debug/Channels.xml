@@ -20,4 +20,8 @@
     <Channel>#test.news</Channel>
     <Key />
   </ChannelEntrys>
+  <ChannelEntrys>
+    <Channel>#ndrag</Channel>
+    <Key>666</Key>
+  </ChannelEntrys>
 </NewDataSet>

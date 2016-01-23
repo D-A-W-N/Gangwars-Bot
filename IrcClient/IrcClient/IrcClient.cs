@@ -137,6 +137,10 @@ namespace GangwarsBot
 			Table.WriteXml (Path, XmlWriteMode.WriteSchema);
 		}
 
+		private void getGangInfo (string gwid)
+		{
+		}
+
 
 		public IrcClient ()
 		{
@@ -265,12 +269,63 @@ namespace GangwarsBot
 			}
 		}
 
-		public async void FilterEmail (MailMessage Message, IrcClient irc)
+		public void FilterEmail (MailMessage Message)
 		{
-			await Task.Run (() => irc.SendResponse ("New Mail", false, "#test.news"));
+			Console.WriteLine (Message.Body.ToString ());
+			Match gwid = Regex.Match (Message.To.ToString (), @"([\d]+)\@");
+			Match enemy = Regex.Match (Message.Body.ToString (), @"Von\:\s(.*)\r\n");
+			Match enemyCity = Regex.Match (Message.Body.ToString (), @"\(aus\s(.*)\)");
+			Match targetCity = Regex.Match (Message.Body.ToString (), @"Betreff\:\s(.*)\:\sAngriffswarnung");
+			Match targetType = Regex.Match (Message.Body.ToString (), @"Ort\s([a-zA-ZäöüÄÖÜ]+)\sin");
+			Match targetAdress = Regex.Match (Message.Body.ToString (), @"in\s(.*\-Str.)\s(\d+)\sinnerhalb");
+			Match targetTime = Regex.Match (Message.Body.ToString (), @"stens\s(\d+)\s(\w+)\s");
+			string enemyInfo = getGangwarsInfo (enemy.Groups [1].Value);
+			string targetInfo = getGangwarsInfo (gwid.Groups [1].Value);
+
+			string output = "A-WARNUNG "
+			                + targetCity.Groups [1].Value +
+			                " :: ZIEL: "
+			                + targetInfo +
+			                " "
+			                + targetType.Groups [1].Value +
+			                " "
+			                + targetAdress.Groups [1].Value +
+			                " "
+			                + targetAdress.Groups [2].Value +
+			                " :: ENEMY: "
+			                + enemyInfo +
+			                " aus "
+			                + enemyCity.Groups [1].Value +
+			                " :: ANKUNFT: < "
+			                + targetTime.Groups [1].Value +
+			                " "
+			                + targetTime.Groups [2].Value;
+			
+			DataTable ChannelTable = getChannels ("Channels.xml");
+			foreach (DataRow row in ChannelTable.Rows) {
+				SendResponse (output, false, row ["Channel"].ToString ());
+			}
 		}
 
-		private void ReadResponse ()
+		public string getGangwarsInfo (string input)
+		{
+			string path = "./gwdb/";
+			DirectoryInfo ParentDirectory = new DirectoryInfo (path);
+
+			foreach (FileInfo f in ParentDirectory.GetFiles()) {
+				string city = path + f.Name;
+				string[] cityLines = File.ReadAllLines (city);
+				foreach (string line in cityLines) {
+					string[] item = line.Split (new Char[] { '\t' }, StringSplitOptions.RemoveEmptyEntries);
+					if ((item [0] == input) || (item [1] == input)) {
+						return item [1] + "(" + item [2] + ")";
+					}
+				}
+			}
+			return input;
+		}
+
+		private async void ReadResponse ()
 		{
 			string ReadedLine;
 			while (true) {
@@ -292,7 +347,7 @@ namespace GangwarsBot
 						JoinChannel ();
 						break;
 					case "366":
-						SendResponse (LineSplit [3] + " betretten.", false, CommandChannel);
+						SendResponse (LineSplit [3] + " betretten.", false, LineSplit [3]);
 						break;
 					case "475":
 						SendResponse (MessageSplit [1], false, CommandChannel);
@@ -311,7 +366,11 @@ namespace GangwarsBot
 							ParseChannelCommand (ChannelMessage, CommandChannel);
 						}
 						break;
+					default: 
+						continue;
 					}
+					await Task.Delay (100);
+					continue;
 				}
 			}
 		}

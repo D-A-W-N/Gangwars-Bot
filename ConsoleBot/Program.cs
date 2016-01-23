@@ -14,8 +14,8 @@ namespace GangwarsBot
 				Thread[] tr = new Thread[2];
 
 				IrcClient irc = new IrcClient ();
-				irc.Server = "azubu.jp.quakenet.org";
-				irc.Port = 6669;
+				irc.Server = "underworld2.no.quakenet.org";
+				irc.Port = 6668;
 				irc.User = "PBot";
 				irc.Nick = "[D]P-Bot";
 				irc.DefaultChannel = "#test.news";
@@ -25,14 +25,14 @@ namespace GangwarsBot
 				tr [0].IsBackground = false;
 
 				ImapListener imap = new ImapListener (irc);
-				imap.Server = "imap.example.de";
+				imap.Server = "localhost";
 				imap.Port = 143;
-				imap.User = "user";
-				imap.Pass = "pass";
+				imap.User = "vmail";
+				imap.Pass = "vmailConnectionPasswort";
 
 				tr [1] = new Thread (new ThreadStart (imap.Connect));
 				tr [1].Name = String.Format ("IMAP");
-				tr [1].IsBackground = true;
+				tr [1].IsBackground = false;
 
 				foreach (Thread x in tr) {
 					x.Start ();
