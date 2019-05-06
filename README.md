@@ -1,4 +1,4 @@
-# Gangwars-Bot
+# Gangwars-PremiumMail-Bot
 
 TODO: Write a project description
 
